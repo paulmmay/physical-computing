@@ -1,8 +1,11 @@
 /*
-   RCA Button
-
-   Paul May
-   2017
+ 
+  RCA Button
+  
+  Paul May
+  2017
+  
+  This example code is in the public domain.
 
 */
 
