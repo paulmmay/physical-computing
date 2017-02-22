@@ -1,3 +1,13 @@
+/*
+
+  RCA Piezo
+
+  Paul May
+  2017
+
+  This example code is in the public domain.
+
+*/
 
 int lowerRange = 600;
 int higherRange = 1000;
@@ -14,12 +24,11 @@ void setup() {
   pinMode(redPin, OUTPUT);
 }
 
-// the loop routine runs over and over again forever:
 void loop() {
   // read the input on analog pin 0:
   int sensorValue = analogRead(A1);
   // print out the value you read:
-  Serial.println(sensorValue, DEC);
+  Serial.println(sensorValue);
   // map the sensor value to a range suitable for making a tone
   float frequency = map(sensorValue, lowerRange, higherRange, lowerTone, higherTone);
 

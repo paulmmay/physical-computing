@@ -17,6 +17,10 @@ void setup()
 {
   smooth();
   size(720, 400);
+  //change line 21 to match your computer's configuration
+  //on my computer - my USB port, which receives the 
+  //serial data is port 1, so I use Serial.list()[1].
+
   String portName = Serial.list()[1];
   println(Serial.list());
   myPort = new Serial(this, portName, 9600);

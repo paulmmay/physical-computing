@@ -1,15 +1,14 @@
-int buttonPin;
+int buttonPin = 9;
 int potPin = A0;
 int fsrPin = A1;
 int ledPin = 10;
+int photoPin = A2;
 boolean ledState = LOW;
 boolean buttonValue;
 boolean lastButtonValue = LOW;
 
 void setup() {
   // put your setup code here, to run once:
-  buttonPin = 9;
-  potPin = A0;
   pinMode(buttonPin, INPUT);
   pinMode(potPin, INPUT);
   pinMode(fsrPin, INPUT);
@@ -23,6 +22,7 @@ void loop() {
   buttonValue = digitalRead(buttonPin);
   int potValue = analogRead(potPin);
   int fsrValue = analogRead(fsrPin);
+  int photoValue = analogRead(photoPin);
 
   if (buttonValue != lastButtonValue) {
     //    Serial.println("The button has changed");
@@ -41,6 +41,8 @@ void loop() {
   Serial.print(fsrValue);
   Serial.print(",");
   Serial.print(ledState);
+  Serial.print(",");
+  Serial.print(photoValue);
   Serial.print(",");
   Serial.print("A");
   Serial.println();
