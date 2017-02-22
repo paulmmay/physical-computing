@@ -1,6 +1,6 @@
 /*
 
-  RCA Piezo
+  RCA Photocell
 
   Paul May
   2017
