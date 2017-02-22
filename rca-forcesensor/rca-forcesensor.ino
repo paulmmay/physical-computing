@@ -1,42 +1,69 @@
 /*
-  AnalogReadSerial
-  Reads an analog input on pin 0, prints the result to the serial monitor.
-  Graphical representation is available using serial plotter (Tools > Serial Plotter menu)
-  Attach the center pin of a potentiometer to pin A0, and the outside pins to +5V and ground.
+
+  RCA Force Sensing Resistor
+
+  Paul May
+  2017
 
   This example code is in the public domain.
+
 */
 
+int light_threshold;
+int moderate_threshold;
+int heavy_threshold;
+String message;
+int levelNumber;
 
-
-// the setup routine runs once when you press reset:
 void setup() {
-  // initialize serial communication at 9600 bits per second:
+  //The piezo is attached to pin AO, which is an iput
+  pinMode(A0, INPUT);
+  //start a serial connection
   Serial.begin(9600);
-  pinMode(7, OUTPUT);
-  pinMode(6, OUTPUT);
+  //set a minimum threshold; play with this
+  light_threshold = 200;
+  moderate_threshold = 600;
+  heavy_threshold = 800;
 }
 
-// the loop routine runs over and over again forever:
+
 void loop() {
-  // read the input on analog pin 0:
-  int sensorValue = analogRead(A1);
-  // print out the value you read:
-  Serial.println(sensorValue,DEC);
-  
-  if (sensorValue >= 700) {
-    digitalWrite(7, HIGH);
-    digitalWrite(6, LOW);
-  }
-  else {
-    digitalWrite(7, LOW);
-    digitalWrite(6, HIGH);
+  //read from the FSR
+  int val = analogRead(A0);
+  //send the data over Serial
+  //if the reading exceeds our threshold, send one message
+
+  //pressure is below our light threshold
+  if (val < light_threshold) {
+    message = "no pressure";
+    levelNumber = 0;
   }
 
-   float frequency = map(sensorValue, 600, 1000, 200, 800);
-   // change the pitch, play for 10 ms:
-   tone(5, frequency, 10);
+  //pressure is above our light threshold
+  //but below our moderate threshold
+  if (val > light_threshold && val < moderate_threshold) {
+    message = "light pressure";
+    levelNumber = 1;
+  }
 
-   
-//  delay(1);        // delay in between reads for stability
+  //pressure is above our moderate threshold
+  //but below our heavy threshold
+  if (val > moderate_threshold && val < heavy_threshold) {
+    message = "moderate pressure";
+    levelNumber = 2;
+  }
+
+
+  //pressure is above our heavy threshold
+  if (val > heavy_threshold) {
+    message = "heavy pressure";
+    levelNumber = 3;
+  }
+
+
+  Serial.print(message);
+  Serial.print(",");
+  Serial.print(levelNumber);
+  Serial.print(",");
+  Serial.println(val);
 }
